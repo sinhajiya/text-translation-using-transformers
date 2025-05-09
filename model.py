@@ -17,7 +17,15 @@ class LayerNorm(nn.Module):
 class MultiHeadAttention(nn.Module):
     '''
     Section 3.2.3
+    h: number of head 
     '''
+    def __init__(self, d_model:int, h: int, droput: int):
+        super().__init__()
+        self.d_model = d_model
+        self.h = h
+        assert d_model % h == 0
+        
+    pass
 
 class FeedForward(nn.Module):
     '''
@@ -46,7 +54,7 @@ class FeedForward(nn.Module):
         output_layer2 = self.linear_layer2(dropout_layer1)
         return output_layer2
 
-class input_embedding(nn.Module):
+class InputEmbedding(nn.Module):
     '''
     Section 3.4
     d_model: dimension of the embedding vector
@@ -62,7 +70,7 @@ class input_embedding(nn.Module):
     def forward(self,x):
         return self.embedding(x) * math.sqrt(self.d_model)  
     
-class postional_encoding(nn.Module):
+class PositionalEncoding(nn.Module):
     '''
     Section 3.5
     Some information about the relative or absolute position of the tokens in the sequence.
@@ -75,7 +83,7 @@ class postional_encoding(nn.Module):
         super().__init__()
         self.d_model = d_model
         self.seq_len = seq_len
-        self.droput = nn.Dropout(dropout)
+        self.dropout = nn.Dropout(dropout)
 
         ''' 
         each word in the sequence will have a encoding of size d_model. (seq_len x d_model)
@@ -96,5 +104,5 @@ class postional_encoding(nn.Module):
         Add positional encoding to each word in the sentence.
         '''
         x = x + (self.pe[:, :x.shape[1], :]).requires_grad_(False)
-        return self.droput(x)
+        return self.dropout(x)
 
