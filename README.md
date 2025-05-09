@@ -35,3 +35,5 @@ Formula:
     Layer 2: d_ff → d_model
     Dropout is applied between the layers for regularization.
 
+## MultiHead Attention Layer
+ ![multiheadattention](https://github.com/user-attachments/assets/bcf053d2-93a6-4138-a0f1-a810ece72025)
